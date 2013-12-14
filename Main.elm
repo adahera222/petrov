@@ -13,7 +13,7 @@ input = sampleOn delta (Input <~ delta)
 
 -- Updates
 
-stepGame : Input -> Game -> Game
+stepGame : Input -> Model.Game -> Model.Game
 stepGame {delta} ({state} as game) = game
 
 gameState = foldp stepGame Model.defaultGame input

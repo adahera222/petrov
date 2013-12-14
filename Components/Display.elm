@@ -6,6 +6,11 @@ sceneBackground = rgb 15 15 15
 
 render : (Int, Int) -> Model.Game -> Element
 render (w, h) {state} =
+  case state of
+    Model.Alive -> renderGame w h
+
+renderGame : Int -> Int -> Element
+renderGame w h =
   let
       background : Form
       background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
