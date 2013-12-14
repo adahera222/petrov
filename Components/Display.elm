@@ -2,38 +2,36 @@ module Components.Display where
 
 import Components.Model as Model
 
-sceneBackground = rgb 15 15 15
-
 styleText : Color -> number -> String -> Element
 styleText fg h v = toText v |> text . Text.color fg . Text.height h . monospace
 
 render : (Int, Int) -> Model.Game -> Element
-render (w, h) {state, timer} =
-  case state of
-    Model.StartScreen -> renderStartScreen w h
-    Model.Alive -> renderGame w h timer
-    Model.Dead -> renderGameOver w h
-
-renderStartScreen : Int -> Int -> Element
-renderStartScreen w h =
+render (windowWidth, windowHeight) {state, timer} =
   let
-      background : Form
-      background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
+    background : Form
+    background = rect Model.gameWidth Model.gameHeight |> filled (rgb 15 15 15)
 
+    forms = case state of
+      Model.StartScreen -> renderStartScreen
+      Model.Alive -> renderGame timer
+      Model.Dead -> renderGameOver
+
+  in collage Model.gameWidth Model.gameHeight (background :: forms) |> container windowWidth windowHeight middle
+
+renderStartScreen : [Form]
+renderStartScreen =
+  let
       welcomeText : Form
       welcomeText = styleText (rgb 160 0 0) 42 "Petrov's Decision" |> toForm |> moveY (Model.halfHeight - 50)
 
       startText : Form
       startText = styleText (rgb 220 220 220) 16 "Press [SPACE] to man your post" |> toForm |> moveY (-Model.halfHeight + 24)
 
-  in collage Model.gameWidth Model.gameHeight [background, welcomeText, startText] |> container w h middle
+  in [welcomeText, startText]
 
-renderGame : Int -> Int -> Int -> Element
-renderGame w h timer =
+renderGame : Int -> [Form]
+renderGame timer =
   let
-      background : Form
-      background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
-
       alarm : Form
       alarm = oval 40 20 |> (filled <| rgb 98 2 2) |> moveY Model.halfHeight
 
@@ -47,15 +45,12 @@ renderGame w h timer =
                      , styleText (rgb 0 255 0) 14 (show timer) |> toForm |> move (-Model.gameWidth / 4, -Model.gameHeight / 4)
                      ] |> group
 
-  in collage Model.gameWidth Model.gameHeight [background, alarm, worldMap, controlPanel] |> container w h middle
+  in [alarm, worldMap, controlPanel]
 
-renderGameOver : Int -> Int -> Element
-renderGameOver w h =
+renderGameOver : [Form]
+renderGameOver =
   let
-    background : Form
-    background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
-
     gameOverMessage : Form
     gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> toForm
 
-  in collage Model.gameWidth Model.gameHeight [background, gameOverMessage] |> container w h middle
+  in [gameOverMessage]
