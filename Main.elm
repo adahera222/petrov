@@ -1,7 +1,7 @@
 import Window
 
-import Components.Model (Game, defaultGame)
-import Components.Display (display)
+import Components.Model as Model
+import Components.Display as Display
 
 -- Inputs
 
@@ -16,6 +16,6 @@ input = sampleOn delta (Input <~ delta)
 stepGame : Input -> Game -> Game
 stepGame {delta} ({state} as game) = game
 
-gameState = foldp stepGame defaultGame input
+gameState = foldp stepGame Model.defaultGame input
 
-main = lift2 display Window.dimensions gameState
+main = lift2 Display.render Window.dimensions gameState
