@@ -7,8 +7,8 @@ type Input = { space: Bool, elapsed: Time }
 data State = StartScreen | Alive
 type Game = { state: State, countDownStart: Time, timer: Int }
 
-(gameWidth,gameHeight) = (720,480)
-(halfWidth,halfHeight) = (360,240)
+(gameWidth, gameHeight) = (720, 480)
+(halfWidth, halfHeight) = (360, 240)
 
 delta = inSeconds <~ fps 35
 input = sampleOn delta (Input <~ Keyboard.space
@@ -20,9 +20,14 @@ defaultGame =
 
 stepGame : Input -> Game -> Game
 stepGame {space, elapsed} ({state, countDownStart, timer} as game) =
-  { game | state <- if state == StartScreen && space then Alive else state
-         , countDownStart <- if state == Alive && countDownStart == 0 then elapsed else countDownStart
-         , timer <- if state == Alive && countDownStart /= 0 then stepTimer countDownStart elapsed else 60
+  { game | state <- if | state == StartScreen && space -> Alive
+                       | otherwise -> state
+
+         , countDownStart <- if | state == Alive && countDownStart == 0 -> elapsed
+                                | otherwise -> countDownStart
+
+         , timer <- if | state == Alive && countDownStart /= 0 -> stepTimer countDownStart elapsed 
+                       | otherwise -> timer
   }
 
 stepTimer : Time -> Time -> Int
