@@ -12,6 +12,7 @@ render (w, h) {state, timer} =
   case state of
     Model.StartScreen -> renderStartScreen w h
     Model.Alive -> renderGame w h timer
+    Model.Dead -> renderGameOver w h
 
 renderStartScreen : Int -> Int -> Element
 renderStartScreen w h =
@@ -47,3 +48,14 @@ renderGame w h timer =
                      ] |> group
 
   in collage Model.gameWidth Model.gameHeight [background, alarm, worldMap, controlPanel] |> container w h middle
+
+renderGameOver : Int -> Int -> Element
+renderGameOver w h =
+  let
+    background : Form
+    background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
+
+    gameOverMessage : Form
+    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> toForm
+
+  in collage Model.gameWidth Model.gameHeight [background, gameOverMessage] |> container w h middle

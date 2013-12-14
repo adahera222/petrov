@@ -4,7 +4,7 @@ import Keyboard
 
 type Input = { space: Bool, elapsed: Time }
 
-data State = StartScreen | Alive
+data State = StartScreen | Alive | Dead
 type Game = { state: State, countDownStart: Time, timer: Int }
 
 (gameWidth, gameHeight) = (720, 480)
@@ -21,6 +21,7 @@ defaultGame =
 stepGame : Input -> Game -> Game
 stepGame {space, elapsed} ({state, countDownStart, timer} as game) =
   { game | state <- if | state == StartScreen && space -> Alive
+                       | state == Alive && timer == 0 -> Dead
                        | otherwise -> state
 
          , countDownStart <- if | state == Alive && countDownStart == 0 -> elapsed
