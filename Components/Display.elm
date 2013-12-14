@@ -4,10 +4,28 @@ import Components.Model as Model
 
 sceneBackground = rgb 15 15 15
 
+styleText : Color -> number -> String -> Element
+styleText fg h v = toText v |> text . Text.color fg . Text.height h . monospace
+
 render : (Int, Int) -> Model.Game -> Element
 render (w, h) {state} =
   case state of
+    Model.StartScreen -> renderStartScreen w h
     Model.Alive -> renderGame w h
+
+renderStartScreen : Int -> Int -> Element
+renderStartScreen w h =
+  let
+      background : Form
+      background = rect Model.gameWidth Model.gameHeight |> filled sceneBackground
+
+      welcomeText : Form
+      welcomeText = styleText (rgb 160 0 0) 42 "Petrov's Decision" |> toForm |> moveY (Model.halfHeight - 50)
+
+      startText : Form
+      startText = styleText (rgb 220 220 220) 16 "Press [SPACE] to man your post" |> toForm |> moveY (-Model.halfHeight + 24)
+
+  in collage Model.gameWidth Model.gameHeight [background, welcomeText, startText] |> container w h middle
 
 renderGame : Int -> Int -> Element
 renderGame w h =
