@@ -41,7 +41,8 @@ renderGame timer =
       alarm = oval 40 20 |> (filled <| if timer `mod` 2 == 0 then (rgb 98 2 2) else (rgb 196 4 4)) |> moveY halfHeight
 
       worldMap : Form
-      worldMap = [ rect 490 266 |> (filled <| rgb 0 0 0)
+      worldMap = [ rect 492 268 |> (filled <| rgb 127 127 127)
+                 , rect 490 266 |> (filled <| rgb 0 0 0)
                  , image 490 266 "/assets/map.png" |> toForm
                  ] |> group |> moveY (((gameHeight - 306) / 2) - 25)
 
