@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+git stash save -u 'stash for publising' &&
+
+git checkout gh-pages &&
+git reset --hard master &&
+
+elm -m Main.elm &&
+unlink index.html
+ln -s build/Main.html index.html &&
+
+git add -Af &&
+git commit --allow-empty-message -m '' &&
+git push -fu origin gh-pages:gh-pages &&
+
+git checkout - &&
+git stash pop
