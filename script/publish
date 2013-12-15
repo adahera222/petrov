@@ -5,9 +5,9 @@ git stash save -u 'stash for publising' &&
 git checkout gh-pages &&
 git reset --hard master &&
 
-elm -m Main.elm &&
-unlink index.html
-ln -s build/Main.html index.html &&
+elm -m Main.elm --runtime=elm-runtime.js &&
+cp ~/.cabal/share/x86_64-linux-ghc-7.6.3/Elm-0.10.0.2/elm-runtime.js elm-runtime.js &&
+cp build/Main.html index.html &&
 
 git add -Af &&
 git commit --allow-empty-message -m '' &&
