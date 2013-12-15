@@ -1,5 +1,7 @@
 module Components.Display where
 
+import Components.Input (launchButtonElement)
+
 import Components.Model as Model
 
 (gameWidth, gameHeight) = (720, 480)

@@ -1,22 +1,16 @@
 module Components.Model where
 
-import Keyboard
-
-type Input = { space: Bool, enter: Bool, elapsed: Time }
+import Components.Input as Input
 
 data State = StartScreen | Alive | Dead
 type Game = { state: State, countDownStart: Time, timer: Int }
 
-delta = inSeconds <~ fps 35
-input = sampleOn delta (Input <~ Keyboard.space
-                               ~ Keyboard.enter
-                               ~ every second)
 defaultGame =
   { state = StartScreen
   , countDownStart = 0
   , timer = 60 }
 
-stepGame : Input -> Game -> Game
+stepGame : Input.Input -> Game -> Game
 stepGame {space, enter, elapsed} ({state, countDownStart, timer} as game) =
   if state == Dead && enter then
     defaultGame
@@ -37,4 +31,4 @@ stepTimer : Time -> Time -> Int
 stepTimer start now =
   60 - (round (inSeconds now) - round (inSeconds start))
 
-gameState = foldp stepGame defaultGame input
+gameState = foldp stepGame defaultGame Input.input
