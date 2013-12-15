@@ -38,7 +38,14 @@ renderGame : Int -> [Form]
 renderGame timer =
   let
       alarm : Form
-      alarm = oval 40 20 |> (filled <| if timer `mod` 2 == 0 then (rgb 98 2 2) else (rgb 196 4 4)) |> moveY halfHeight
+      alarm =
+        let modulus : Int
+            modulus = timer `mod` 2
+
+        in [ oval 40 20 |> (filled <| if modulus == 0 then (rgb 98 2 2) else (rgb 196 4 4)) |> moveY halfHeight
+           , collage gameWidth gameHeight [rect gameWidth gameHeight |> filled (rgb 196 4 4)]
+               |> opacity (0.2 * toFloat modulus) |> toForm
+           ] |> group
 
       worldMap : Form
       worldMap = [ rect 492 268 |> (filled <| rgb 127 127 127)
@@ -56,11 +63,12 @@ renderGame timer =
             countDown = [rect 30 20 |> (filled <| rgb 0 0 0), styleText (rgb 0 255 0) 14 (show timer)]
                           |> group |> move (-gameWidth / 2 + 100, -gameHeight / 3)
 
-            launchButton : Form
-            launchButton = launchButtonElement |> toForm |> move (-gameWidth / 2 + 200, -gameHeight / 3)
+        in [background, countDown] |> group
 
-        in [background, countDown, launchButton] |> group
-  in [alarm, worldMap, controlPanel]
+      launchButton : Form
+      launchButton = launchButtonElement |> toForm |> move (-gameWidth / 2 + 200, -gameHeight / 3)
+
+  in [worldMap, controlPanel, alarm, launchButton]
 
 renderGameOver : [Form]
 renderGameOver =
