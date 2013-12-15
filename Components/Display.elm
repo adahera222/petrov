@@ -39,13 +39,16 @@ renderStartScreen =
 renderIntroScreen : [Form]
 renderIntroScreen =
   let
-    setting : Form
-    setting  = styleText (rgb 220 220 220) 20 "Серпухов-15" |> moveY 100
+    location : Form
+    location  = styleText (rgb 220 220 220) 20 "Серпухов-15" |> moveY 150
+
+    date : Form
+    date = styleText (rgb 220 220 220) 20 "26 Semptember 1983" |> moveY 75
 
     salutation : Form
     salutation = styleText (rgb 160 0 0) 20 "Good morning, Comrade Станисла́в" |> moveY -100
 
-  in [setting, salutation]
+  in [location, date, salutation]
 
 renderGame : Int -> [Form]
 renderGame timer =
