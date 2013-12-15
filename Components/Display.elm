@@ -5,8 +5,8 @@ import Components.Model as Model
 (gameWidth, gameHeight) = (720, 480)
 (halfWidth, halfHeight) = (360, 240)
 
-styleText : Color -> number -> String -> Element
-styleText fg h v = toText v |> text . Text.color fg . Text.height h . monospace
+styleText : Color -> number -> String -> Form
+styleText fg h v = toText v |> toForm . text . Text.color fg . Text.height h . monospace
 
 render : (Int, Int) -> Model.Game -> Element
 render (windowWidth, windowHeight) {state, timer} =
@@ -25,10 +25,10 @@ renderStartScreen : [Form]
 renderStartScreen =
   let
       welcomeText : Form
-      welcomeText = styleText (rgb 160 0 0) 42 "Petrov's Decision" |> toForm |> moveY (halfHeight - 50)
+      welcomeText = styleText (rgb 160 0 0) 42 "Petrov's Decision" |> moveY (halfHeight - 50)
 
       startText : Form
-      startText = styleText (rgb 220 220 220) 16 "Press [SPACE] to man your post" |> toForm |> moveY (-halfHeight + 24)
+      startText = styleText (rgb 220 220 220) 16 "Press [SPACE] to man your post" |> moveY (-halfHeight + 24)
 
   in [welcomeText, startText]
 
@@ -47,7 +47,7 @@ renderGame timer =
       controlPanel = [ polygon (path [(0, 0), (gameWidth - 100, 0), (gameWidth - 60, (-halfHeight / 2)), (-30, (-halfHeight / 2))])
                          |> (filled <| rgb 31 31 31) |> move (-halfWidth + 45, -(halfHeight / 2) + 20)
                      , [ rect 30 20 |> (filled <| rgb 0 0 0)
-                       , styleText (rgb 0 255 0) 14 (show timer) |> toForm
+                       , styleText (rgb 0 255 0) 14 (show timer)
                        ] |> group |> move (-gameWidth / 2 + 100, -gameHeight / 3)
                      ] |> group
 
@@ -57,9 +57,9 @@ renderGameOver : [Form]
 renderGameOver =
   let
     gameOverMessage : Form
-    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> toForm |> moveY(halfHeight / 4)
+    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 4)
 
     replayMessage : Form
-    replayMessage = styleText (rgb 220 220 200) 16 "Press [ENTER] to relive that day" |> toForm |> moveY (-halfHeight / 2)
+    replayMessage = styleText (rgb 220 220 200) 16 "Press [ENTER] to relive that day" |> moveY (-halfHeight / 2)
 
   in [gameOverMessage, replayMessage]
