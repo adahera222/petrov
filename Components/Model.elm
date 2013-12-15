@@ -7,9 +7,6 @@ type Input = { space: Bool, enter: Bool, elapsed: Time }
 data State = StartScreen | Alive | Dead
 type Game = { state: State, countDownStart: Time, timer: Int }
 
-(gameWidth, gameHeight) = (720, 480)
-(halfWidth, halfHeight) = (360, 240)
-
 delta = inSeconds <~ fps 35
 input = sampleOn delta (Input <~ Keyboard.space
                                ~ Keyboard.enter
