@@ -1,0 +1,133 @@
+Elm.Components = Elm.Components || {};
+Elm.Components.Model = Elm.Components.Model || {};
+Elm.Components.Model.make = function (elm) {
+   elm.Components = elm.Components || {};
+   elm.Components.Model = elm.Components.Model || {};
+   if (elm.Components.Model.values)
+   return elm.Components.Model.values;
+   var N = Elm.Native,
+   _N = N.Utils.make(elm),
+   _L = N.List.make(elm),
+   _E = N.Error.make(elm),
+   _J = N.JavaScript.make(elm),
+   $moduleName = "Components.Model";
+   var Text = Elm.Text.make(elm);
+   var Text = Elm.Text.make(elm);
+   var Basics = Elm.Basics.make(elm);
+   var Signal = Elm.Signal.make(elm);
+   var List = Elm.List.make(elm);
+   var Maybe = Elm.Maybe.make(elm);
+   var Time = Elm.Time.make(elm);
+   var Prelude = Elm.Prelude.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Element = Elm.Graphics.Element.make(elm);
+   var Color = Elm.Color.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Collage = Elm.Graphics.Collage.make(elm);
+   var Components = Components || {};
+   Components.Input = Elm.Components.Input.make(elm);
+   var _op = {};
+   var stepTimer = F2(function (start,
+   now) {
+      return 60 - (Basics.round(Time.inSeconds(now)) - Basics.round(Time.inSeconds(start)));
+   });
+   var Win = {ctor: "Win"};
+   var StartScreen = {ctor: "StartScreen"};
+   var NotYet = {ctor: "NotYet"};
+   var defaultGame = {_: {}
+                     ,countDownStart: 0
+                     ,done: NotYet
+                     ,realLaunch: false
+                     ,startTime: -1
+                     ,state: StartScreen
+                     ,timer: 60};
+   var IntroScreen = {ctor: "IntroScreen"};
+   var GoodJob = {ctor: "GoodJob"};
+   var Game = F6(function (a,
+   b,
+   c,
+   d,
+   e,
+   f) {
+      return {_: {}
+             ,countDownStart: e
+             ,done: b
+             ,realLaunch: d
+             ,startTime: c
+             ,state: a
+             ,timer: f};
+   });
+   var Fail = {ctor: "Fail"};
+   var Done = {ctor: "Done"};
+   var AtFault = {ctor: "AtFault"};
+   var calculateDoneCondition = F2(function (realLaunch,
+   didLaunch) {
+      return Basics.not(realLaunch) && Basics.not(didLaunch) ? Win : Basics.not(realLaunch) && didLaunch ? AtFault : realLaunch && Basics.not(didLaunch) ? Fail : realLaunch && didLaunch ? GoodJob : _E.If($moduleName,
+      "between lines 59 and 62");
+   });
+   var Alive = {ctor: "Alive"};
+   var stepGame = F2(function (arg1,
+   arg0) {
+      return function () {
+         return function () {
+            return _N.eq(arg0.state,
+            Done) && arg1.enter ? defaultGame : _N.replace([["state"
+                                                            ,_N.eq(arg0.state,
+                                                            StartScreen) && arg1.space ? IntroScreen : _N.eq(arg0.state,
+                                                            IntroScreen) && _N.cmp(Basics.round(Time.inSeconds(arg1.elapsed)) - arg0.startTime,
+                                                            5) > -1 ? Alive : _N.eq(arg0.state,
+                                                            Alive) && (_N.eq(arg0.timer,
+                                                            0) || arg1.launch) ? Done : arg0.state]
+                                                           ,["done"
+                                                            ,_N.eq(arg0.state,
+                                                            Alive) && (_N.eq(arg0.timer,
+                                                            0) || arg1.launch) || _N.eq(arg0.state,
+                                                            Done) ? A2(calculateDoneCondition,
+                                                            arg0.realLaunch,
+                                                            arg1.launch) : NotYet]
+                                                           ,["realLaunch"
+                                                            ,!_N.eq(arg0.state,
+                                                            Alive) && !_N.eq(arg0.state,
+                                                            Done) ? _N.eq(A2(Basics.mod,
+                                                            Basics.round(arg1.elapsed),
+                                                            10),
+                                                            1) : arg0.realLaunch]
+                                                           ,["startTime"
+                                                            ,_N.eq(arg0.state,
+                                                            StartScreen) ? Basics.round(Time.inSeconds(arg1.elapsed)) : arg0.startTime]
+                                                           ,["countDownStart"
+                                                            ,_N.eq(arg0.state,
+                                                            Alive) && _N.eq(arg0.countDownStart,
+                                                            0) ? arg1.elapsed : arg0.countDownStart]
+                                                           ,["timer"
+                                                            ,_N.eq(arg0.state,
+                                                            Alive) && !_N.eq(arg0.countDownStart,
+                                                            0) ? A2(stepTimer,
+                                                            arg0.countDownStart,
+                                                            arg1.elapsed) : arg0.timer]],
+            arg0);
+         }();
+      }();
+   });
+   var gameState = A3(Signal.foldp,
+   stepGame,
+   defaultGame,
+   Components.Input.input);
+   elm.Components.Model.values = {_op: _op
+                                 ,defaultGame: defaultGame
+                                 ,stepGame: stepGame
+                                 ,stepTimer: stepTimer
+                                 ,calculateDoneCondition: calculateDoneCondition
+                                 ,gameState: gameState
+                                 ,StartScreen: StartScreen
+                                 ,IntroScreen: IntroScreen
+                                 ,Alive: Alive
+                                 ,Done: Done
+                                 ,NotYet: NotYet
+                                 ,Win: Win
+                                 ,AtFault: AtFault
+                                 ,Fail: Fail
+                                 ,GoodJob: GoodJob
+                                 ,Game: Game};
+   return elm.Components.Model.values;
+};

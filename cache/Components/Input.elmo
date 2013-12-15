@@ -1,0 +1,88 @@
+Elm.Components = Elm.Components || {};
+Elm.Components.Input = Elm.Components.Input || {};
+Elm.Components.Input.make = function (elm) {
+   elm.Components = elm.Components || {};
+   elm.Components.Input = elm.Components.Input || {};
+   if (elm.Components.Input.values)
+   return elm.Components.Input.values;
+   var N = Elm.Native,
+   _N = N.Utils.make(elm),
+   _L = N.List.make(elm),
+   _E = N.Error.make(elm),
+   _J = N.JavaScript.make(elm),
+   $moduleName = "Components.Input";
+   var Text = Elm.Text.make(elm);
+   var Text = Elm.Text.make(elm);
+   var Basics = Elm.Basics.make(elm);
+   var Signal = Elm.Signal.make(elm);
+   var List = Elm.List.make(elm);
+   var Maybe = Elm.Maybe.make(elm);
+   var Time = Elm.Time.make(elm);
+   var Prelude = Elm.Prelude.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Element = Elm.Graphics.Element.make(elm);
+   var Color = Elm.Color.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Collage = Elm.Graphics.Collage.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Input = Elm.Graphics.Input.make(elm);
+   var Keyboard = Elm.Keyboard.make(elm);
+   var _op = {};
+   var delta = A2(Signal._op["<~"],
+   Time.inSeconds,
+   Time.fps(35));
+   var btn_up = A3(Graphics.Element.image,
+   46,
+   36,
+   "assets/button.png");
+   var btn_down = A3(Graphics.Element.image,
+   46,
+   36,
+   "assets/button_down.png");
+   var Input = F4(function (a,
+   b,
+   c,
+   d) {
+      return {_: {}
+             ,elapsed: d
+             ,enter: b
+             ,launch: c
+             ,space: a};
+   });
+   var $ = A3(Graphics.Input.customButton,
+   btn_up,
+   btn_up,
+   btn_down),
+   launchButtonElement = $._0,
+   launchButtonSignal = $._1;
+   var input = A2(Signal.sampleOn,
+   delta,
+   A2(Signal._op["~"],
+   A2(Signal._op["~"],
+   A2(Signal._op["~"],
+   A2(Signal._op["<~"],
+   Input,
+   Keyboard.space),
+   Keyboard.enter),
+   Signal.merges(_J.toList([Signal.constant(false)
+                           ,A2(Signal._op["<~"],
+                           function (arg0) {
+                              return function () {
+                                 return true;
+                              }();
+                           },
+                           launchButtonSignal)
+                           ,A2(Signal.sampleOn,
+                           Keyboard.enter,
+                           Signal.constant(false))]))),
+   Time.every(Time.second)));
+   elm.Components.Input.values = {_op: _op
+                                 ,btn_up: btn_up
+                                 ,btn_down: btn_down
+                                 ,launchButtonElement: launchButtonElement
+                                 ,launchButtonSignal: launchButtonSignal
+                                 ,delta: delta
+                                 ,input: input
+                                 ,Input: Input};
+   return elm.Components.Input.values;
+};

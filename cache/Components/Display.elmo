@@ -1,0 +1,292 @@
+Elm.Components = Elm.Components || {};
+Elm.Components.Display = Elm.Components.Display || {};
+Elm.Components.Display.make = function (elm) {
+   elm.Components = elm.Components || {};
+   elm.Components.Display = elm.Components.Display || {};
+   if (elm.Components.Display.values)
+   return elm.Components.Display.values;
+   var N = Elm.Native,
+   _N = N.Utils.make(elm),
+   _L = N.List.make(elm),
+   _E = N.Error.make(elm),
+   _J = N.JavaScript.make(elm),
+   $moduleName = "Components.Display";
+   var Text = Elm.Text.make(elm);
+   var Text = Elm.Text.make(elm);
+   var Basics = Elm.Basics.make(elm);
+   var Signal = Elm.Signal.make(elm);
+   var List = Elm.List.make(elm);
+   var Maybe = Elm.Maybe.make(elm);
+   var Time = Elm.Time.make(elm);
+   var Prelude = Elm.Prelude.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Element = Elm.Graphics.Element.make(elm);
+   var Color = Elm.Color.make(elm);
+   var Graphics = Graphics || {};
+   Graphics.Collage = Elm.Graphics.Collage.make(elm);
+   var Components = Components || {};
+   Components.Input = Elm.Components.Input.make(elm);
+   var Components = Components || {};
+   Components.Model = Elm.Components.Model.make(elm);
+   var _op = {};
+   var styleText = F3(function (fg,
+   h,
+   v) {
+      return function ($) {
+         return Graphics.Collage.toForm(Text.text(Text.color(fg)(Text.height(h)(Text.monospace($)))));
+      }(Text.toText(v));
+   });
+   var renderIntroScreen = function () {
+      var salutation = Graphics.Collage.moveY(-100)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      20,
+      "Good morning, Comrade Станисла́в"));
+      var location = Graphics.Collage.moveY(150)(A3(styleText,
+      A3(Color.rgb,220,220,220),
+      20,
+      "Серпухов-15"));
+      var date = Graphics.Collage.moveY(75)(A3(styleText,
+      A3(Color.rgb,220,220,220),
+      20,
+      "26 Semptember 1983"));
+      return _J.toList([location
+                       ,date
+                       ,salutation]);
+   }();
+   var $ = {ctor: "_Tuple2"
+           ,_0: 360
+           ,_1: 240},
+   halfWidth = $._0,
+   halfHeight = $._1;
+   var renderAtFault = function () {
+      var consequence = Graphics.Collage.moveY(halfHeight / 4)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      24,
+      "Good job starting a nuclear war"));
+      var atFaultMessage = Graphics.Collage.moveY(halfHeight / 2)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      40,
+      "Game Over"));
+      return _J.toList([atFaultMessage
+                       ,consequence]);
+   }();
+   var renderFail = function () {
+      var failMessage = Graphics.Collage.moveY(halfHeight / 2)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      40,
+      "That could have gone better"));
+      var consequence = Graphics.Collage.moveY(halfHeight / 4)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      24,
+      "War is on, but at least it isn\'t your fault"));
+      return _J.toList([failMessage
+                       ,consequence]);
+   }();
+   var renderGoodJob = function () {
+      var goodJobMessage = Graphics.Collage.moveY(halfHeight / 2)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      40,
+      "Game Over"));
+      var consequence = Graphics.Collage.moveY(halfHeight / 4)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      24,
+      "You did your job and launched the counterstrike"));
+      return _J.toList([goodJobMessage
+                       ,consequence]);
+   }();
+   var renderStartScreen = function () {
+      var welcomeText = Graphics.Collage.moveY(halfHeight - 50)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      42,
+      "Петро́в"));
+      var startText = Graphics.Collage.moveY(0 - halfHeight + 24)(A3(styleText,
+      A3(Color.rgb,220,220,220),
+      16,
+      "Press [SPACE] to man your post"));
+      return _J.toList([welcomeText
+                       ,startText]);
+   }();
+   var renderWin = function () {
+      var winMessage = Graphics.Collage.moveY(halfHeight / 2)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      40,
+      "You win!"));
+      var consequence = Graphics.Collage.moveY(halfHeight / 4)(A3(styleText,
+      A3(Color.rgb,160,0,0),
+      24,
+      "Someday, the world will know your name"));
+      return _J.toList([winMessage
+                       ,consequence]);
+   }();
+   var renderGameOver = function (done) {
+      return function () {
+         var replayMessage = Graphics.Collage.moveY((0 - halfHeight) / 2)(A3(styleText,
+         A3(Color.rgb,220,220,200),
+         16,
+         "Press [ENTER] to relive that day"));
+         var endGameMessages = function () {
+            switch (done.ctor)
+            {case "AtFault":
+               return renderAtFault;
+               case "Fail": return renderFail;
+               case "GoodJob":
+               return renderGoodJob;
+               case "Win": return renderWin;}
+            _E.Case($moduleName,
+            "between lines 93 and 99");
+         }();
+         return _L.append(endGameMessages,
+         _J.toList([replayMessage]));
+      }();
+   };
+   var $ = {ctor: "_Tuple2"
+           ,_0: 720
+           ,_1: 480},
+   gameWidth = $._0,
+   gameHeight = $._1;
+   var renderGame = function (timer) {
+      return function () {
+         var worldMap = Graphics.Collage.moveY((gameHeight - 306) / 2 - 25)(Graphics.Collage.group(_J.toList([Graphics.Collage.filled(A3(Color.rgb,
+                                                                                                             127,
+                                                                                                             127,
+                                                                                                             127))(A2(Graphics.Collage.rect,
+                                                                                                             492,
+                                                                                                             268))
+                                                                                                             ,Graphics.Collage.filled(A3(Color.rgb,
+                                                                                                             0,
+                                                                                                             0,
+                                                                                                             0))(A2(Graphics.Collage.rect,
+                                                                                                             490,
+                                                                                                             266))
+                                                                                                             ,Graphics.Collage.toForm(A3(Graphics.Element.image,
+                                                                                                             490,
+                                                                                                             266,
+                                                                                                             "assets/map.png"))])));
+         var launchButton = Graphics.Collage.move({ctor: "_Tuple2"
+                                                  ,_0: gameWidth / 2 - 3 * halfWidth / 5
+                                                  ,_1: (0 - gameHeight) / 3})(Graphics.Collage.toForm(Components.Input.launchButtonElement));
+         var controlPanel = function () {
+            var countDown = Graphics.Collage.move({ctor: "_Tuple2"
+                                                  ,_0: (0 - gameWidth) / 2 + 3 * halfWidth / 5
+                                                  ,_1: (0 - gameHeight) / 3})(Graphics.Collage.group(_J.toList([Graphics.Collage.filled(A3(Color.rgb,
+                                                                                                               0,
+                                                                                                               0,
+                                                                                                               0))(A2(Graphics.Collage.rect,
+                                                                                                               30,
+                                                                                                               20))
+                                                                                                               ,A3(styleText,
+                                                                                                               A3(Color.rgb,
+                                                                                                               0,
+                                                                                                               255,
+                                                                                                               0),
+                                                                                                               14,
+                                                                                                               Prelude.show(timer))])));
+            var background = Graphics.Collage.move({ctor: "_Tuple2"
+                                                   ,_0: 0 - halfWidth + 45
+                                                   ,_1: 0 - halfHeight / 2 + 20})(Graphics.Collage.filled(A3(Color.rgb,
+            31,
+            31,
+            31))(Graphics.Collage.polygon(Graphics.Collage.path(_J.toList([{ctor: "_Tuple2"
+                                                                           ,_0: 0
+                                                                           ,_1: 0}
+                                                                          ,{ctor: "_Tuple2"
+                                                                           ,_0: gameWidth - 100
+                                                                           ,_1: 0}
+                                                                          ,{ctor: "_Tuple2"
+                                                                           ,_0: gameWidth - 60
+                                                                           ,_1: (0 - halfHeight) / 2}
+                                                                          ,{ctor: "_Tuple2"
+                                                                           ,_0: -30
+                                                                           ,_1: (0 - halfHeight) / 2}])))));
+            return Graphics.Collage.group(_J.toList([background
+                                                    ,countDown]));
+         }();
+         var alarm = function () {
+            var modulus = A2(Basics.mod,
+            timer,
+            2);
+            return Graphics.Collage.group(_J.toList([Graphics.Collage.moveY(halfHeight)(Graphics.Collage.filled(_N.eq(modulus,
+                                                    0) ? A3(Color.rgb,
+                                                    98,
+                                                    2,
+                                                    2) : A3(Color.rgb,
+                                                    196,
+                                                    4,
+                                                    4))(A2(Graphics.Collage.oval,
+                                                    40,
+                                                    20)))
+                                                    ,Graphics.Collage.toForm(Graphics.Element.opacity(0.2 * Basics.toFloat(modulus))(A3(Graphics.Collage.collage,
+                                                    gameWidth,
+                                                    gameHeight,
+                                                    _J.toList([Graphics.Collage.filled(A3(Color.rgb,
+                                                    196,
+                                                    4,
+                                                    4))(A2(Graphics.Collage.rect,
+                                                    gameWidth,
+                                                    gameHeight))]))))]));
+         }();
+         return _J.toList([worldMap
+                          ,controlPanel
+                          ,alarm
+                          ,launchButton]);
+      }();
+   };
+   var render = F2(function (arg1,
+   arg0) {
+      return function () {
+         return function () {
+            switch (arg1.ctor)
+            {case "_Tuple2":
+               return function () {
+                    var forms = function () {
+                       var _case5 = arg0.state;
+                       switch (_case5.ctor)
+                       {case "Alive":
+                          return renderGame(arg0.timer);
+                          case "Done":
+                          return renderGameOver(arg0.done);
+                          case "IntroScreen":
+                          return renderIntroScreen;
+                          case "StartScreen":
+                          return renderStartScreen;}
+                       _E.Case($moduleName,
+                       "between lines 20 and 26");
+                    }();
+                    var background = Graphics.Collage.filled(A3(Color.rgb,
+                    15,
+                    15,
+                    15))(A2(Graphics.Collage.rect,
+                    gameWidth,
+                    gameHeight));
+                    return A3(Graphics.Element.container,
+                    arg1._0,
+                    arg1._1,
+                    Graphics.Element.middle)(A3(Graphics.Collage.collage,
+                    gameWidth,
+                    gameHeight,
+                    {ctor: "::"
+                    ,_0: background
+                    ,_1: forms}));
+                 }();}
+            _E.Case($moduleName,
+            "between lines 15 and 26");
+         }();
+      }();
+   });
+   elm.Components.Display.values = {_op: _op
+                                   ,gameHeight: gameHeight
+                                   ,gameWidth: gameWidth
+                                   ,halfHeight: halfHeight
+                                   ,halfWidth: halfWidth
+                                   ,styleText: styleText
+                                   ,render: render
+                                   ,renderStartScreen: renderStartScreen
+                                   ,renderIntroScreen: renderIntroScreen
+                                   ,renderGame: renderGame
+                                   ,renderGameOver: renderGameOver
+                                   ,renderWin: renderWin
+                                   ,renderAtFault: renderAtFault
+                                   ,renderFail: renderFail
+                                   ,renderGoodJob: renderGoodJob};
+   return elm.Components.Display.values;
+};
