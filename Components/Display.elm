@@ -20,7 +20,7 @@ render (windowWidth, windowHeight) {state, timer} =
       Model.StartScreen -> renderStartScreen
       Model.IntroScreen -> renderIntroScreen
       Model.Alive -> renderGame timer
-      Model.Dead -> renderGameOver
+      Model.Done -> renderGameOver
 
   in collage gameWidth gameHeight (background :: forms) |> container windowWidth windowHeight middle
 
