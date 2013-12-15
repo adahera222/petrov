@@ -11,13 +11,13 @@ defaultGame =
   , timer = 60 }
 
 stepGame : Input.Input -> Game -> Game
-stepGame {space, enter, elapsed} ({state, countDownStart, timer} as game) =
+stepGame {space, enter, launch, elapsed} ({state, countDownStart, timer} as game) =
   if state == Dead && enter then
     defaultGame
 
   else
     { game | state <- if | state == StartScreen && space -> Alive
-                         | state == Alive && timer == 0 -> Dead
+                         | state == Alive && (timer == 0 || launch) -> Dead
                          | otherwise -> state
 
            , countDownStart <- if | state == Alive && countDownStart == 0 -> elapsed

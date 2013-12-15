@@ -55,7 +55,10 @@ renderGame timer =
             countDown = [rect 30 20 |> (filled <| rgb 0 0 0), styleText (rgb 0 255 0) 14 (show timer)]
                           |> group |> move (-gameWidth / 2 + 100, -gameHeight / 3)
 
-        in [background, countDown] |> group
+            launchButton : Form
+            launchButton = launchButtonElement |> toForm |> move (-gameWidth / 2 + 200, -gameHeight / 3)
+
+        in [background, countDown, launchButton] |> group
   in [alarm, worldMap, controlPanel]
 
 renderGameOver : [Form]
