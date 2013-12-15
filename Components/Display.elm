@@ -107,7 +107,7 @@ renderWin =
       winMessage = styleText (rgb 160 0 0) 40 "You win!" |> moveY(halfHeight / 2)
 
       consequence : Form
-      consequence = styleText (rgb 160 0 0) 30 "Someday, the world will know your name" |> moveY(halfHeight / 4)
+      consequence = styleText (rgb 160 0 0) 24 "Someday, the world will know your name" |> moveY(halfHeight / 4)
 
   in [winMessage, consequence]
 
@@ -117,7 +117,7 @@ renderAtFault =
       atFaultMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 2)
 
       consequence : Form
-      consequence = styleText (rgb 160 0 0) 30 "Good job starting a nuclear war" |> moveY(halfHeight / 4)
+      consequence = styleText (rgb 160 0 0) 24 "Good job starting a nuclear war" |> moveY(halfHeight / 4)
 
   in [atFaultMessage, consequence]
 
@@ -127,7 +127,7 @@ renderFail =
       failMessage = styleText (rgb 160 0 0) 40 "That could have gone better" |> moveY(halfHeight / 2)
 
       consequence : Form
-      consequence = styleText (rgb 160 0 0) 30 "War is on, but at least it isn't your fault" |> moveY(halfHeight / 4)
+      consequence = styleText (rgb 160 0 0) 24 "War is on, but at least it isn't your fault" |> moveY(halfHeight / 4)
 
   in [failMessage, consequence]
 
@@ -137,6 +137,6 @@ renderGoodJob =
       goodJobMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 2)
 
       consequence : Form
-      consequence = styleText (rgb 160 0 0) 30 "You did your job and launched the counterstrike" |> moveY(halfHeight / 4)
+      consequence = styleText (rgb 160 0 0) 24 "You did your job and launched the counterstrike" |> moveY(halfHeight / 4)
 
   in [goodJobMessage, consequence]
