@@ -17,5 +17,5 @@ btn_down = image 46 36 "assets/button_down.png"
 delta = inSeconds <~ fps 35
 input = sampleOn delta (Input <~ Keyboard.space
                                ~ Keyboard.enter
-                               ~ merge ((\_ -> True) <~ launchButtonSignal) (sampleOn (inSeconds <~ fps 30) (constant False))
+                               ~ merges [constant False, (\_ -> True) <~ launchButtonSignal, sampleOn Keyboard.enter (constant False)]
                                ~ every second)
