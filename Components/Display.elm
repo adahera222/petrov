@@ -51,6 +51,9 @@ renderGameOver : [Form]
 renderGameOver =
   let
     gameOverMessage : Form
-    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> toForm
+    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> toForm |> moveY(Model.halfHeight / 4)
 
-  in [gameOverMessage]
+    replayMessage : Form
+    replayMessage = styleText (rgb 220 220 200) 16 "Press [ENTER] to relive that day" |> toForm |> moveY (-Model.halfHeight / 2)
+
+  in [gameOverMessage, replayMessage]
