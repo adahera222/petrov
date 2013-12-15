@@ -34,10 +34,10 @@ stepGame {space, enter, launch, elapsed} ({state, done, startTime, realLaunch, c
                          | state == Alive && (timer == 0 || launch) -> Done
                          | otherwise -> state
 
-           , done <- if | state == Alive && (timer == 0 || launch) -> calculateDoneCondition realLaunch (timer /= 0 && launch)
+           , done <- if | (state == Alive && (timer == 0 || launch)) || state == Done -> calculateDoneCondition realLaunch (timer /= 0 && launch)
                         | otherwise -> NotYet
 
-           , realLaunch <- if | state /= Alive -> round elapsed `mod` 10 == 1
+           , realLaunch <- if | (state /= Alive && state /= Done) -> round elapsed `mod` 10 == 1
                               | otherwise -> realLaunch
 
            , startTime <- if | state == StartScreen -> round (inSeconds elapsed)
