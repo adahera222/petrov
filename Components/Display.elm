@@ -18,6 +18,7 @@ render (windowWidth, windowHeight) {state, timer} =
 
     forms = case state of
       Model.StartScreen -> renderStartScreen
+      Model.IntroScreen -> renderIntroScreen
       Model.Alive -> renderGame timer
       Model.Dead -> renderGameOver
 
@@ -27,12 +28,23 @@ renderStartScreen : [Form]
 renderStartScreen =
   let
       welcomeText : Form
-      welcomeText = styleText (rgb 160 0 0) 42 "Petrov's Decision" |> moveY (halfHeight - 50)
+      welcomeText = styleText (rgb 160 0 0) 42 "Петро́в" |> moveY (halfHeight - 50)
 
       startText : Form
       startText = styleText (rgb 220 220 220) 16 "Press [SPACE] to man your post" |> moveY (-halfHeight + 24)
 
   in [welcomeText, startText]
+
+renderIntroScreen : [Form]
+renderIntroScreen =
+  let
+    setting : Form
+    setting  = styleText (rgb 220 220 220) 20 "Серпухов-15" |> moveY 100
+
+    salutation : Form
+    salutation = styleText (rgb 160 0 0) 20 "Good morning, Comrade Станисла́в" |> moveY -100
+
+  in [setting, salutation]
 
 renderGame : Int -> [Form]
 renderGame timer =
