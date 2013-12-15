@@ -36,7 +36,7 @@ renderGame : Int -> [Form]
 renderGame timer =
   let
       alarm : Form
-      alarm = oval 40 20 |> (filled <| rgb 98 2 2) |> moveY halfHeight
+      alarm = oval 40 20 |> (filled <| if timer `mod` 2 == 0 then (rgb 98 2 2) else (rgb 196 4 4)) |> moveY halfHeight
 
       worldMap : Form
       worldMap = [ rect 490 266 |> (filled <| rgb 0 0 0)
