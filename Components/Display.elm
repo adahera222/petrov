@@ -66,7 +66,7 @@ renderGame timer =
       worldMap : Form
       worldMap = [ rect 492 268 |> (filled <| rgb 127 127 127)
                  , rect 490 266 |> (filled <| rgb 0 0 0)
-                 , image 490 266 "/assets/map.png" |> toForm
+                 , image 490 266 "assets/map.png" |> toForm
                  ] |> group |> moveY (((gameHeight - 306) / 2) - 25)
 
       controlPanel : Form
