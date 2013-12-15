@@ -44,11 +44,11 @@ renderGame timer =
                  ] |> group |> moveY (((gameHeight - 306) / 2) - 25)
 
       controlPanel : Form
-      controlPanel = [ polygon (path [(0, 0), (gameWidth - 60, 0), (gameWidth - 45, (-halfHeight / 2)), (-15, (-halfHeight / 2))])
-                         |> (filled <| rgb 31 31 31) |> move (-halfWidth + 30, -(halfHeight / 2) + 50)
+      controlPanel = [ polygon (path [(0, 0), (gameWidth - 100, 0), (gameWidth - 60, (-halfHeight / 2)), (-30, (-halfHeight / 2))])
+                         |> (filled <| rgb 31 31 31) |> move (-halfWidth + 45, -(halfHeight / 2) + 20)
                      , [ rect 30 20 |> (filled <| rgb 0 0 0)
                        , styleText (rgb 0 255 0) 14 (show timer) |> toForm
-                       ] |> group |> move (-gameWidth / 4, -gameHeight / 4)
+                       ] |> group |> move (-gameWidth / 2 + 100, -gameHeight / 3)
                      ] |> group
 
   in [alarm, worldMap, controlPanel]
