@@ -92,6 +92,7 @@ renderGameOver done =
       Model.AtFault -> renderAtFault
       Model.Fail -> renderFail
       Model.GoodJob -> renderGoodJob
+      otherwise -> []
 
     replayMessage : Form
     replayMessage = styleText (rgb 220 220 200) 16 "Press [ENTER] to relive that day" |> moveY (-halfHeight / 2)
