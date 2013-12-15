@@ -11,16 +11,17 @@ styleText : Color -> number -> String -> Form
 styleText fg h v = toText v |> toForm . text . Text.color fg . Text.height h . monospace
 
 render : (Int, Int) -> Model.Game -> Element
-render (windowWidth, windowHeight) {state, timer} =
+render (windowWidth, windowHeight) {state, done, timer} =
   let
     background : Form
     background = rect gameWidth gameHeight |> filled (rgb 15 15 15)
 
+    forms : [Form]
     forms = case state of
       Model.StartScreen -> renderStartScreen
       Model.IntroScreen -> renderIntroScreen
       Model.Alive -> renderGame timer
-      Model.Done -> renderGameOver
+      Model.Done -> renderGameOver done
 
   in collage gameWidth gameHeight (background :: forms) |> container windowWidth windowHeight middle
 
@@ -82,13 +83,57 @@ renderGame timer =
 
   in [worldMap, controlPanel, alarm, launchButton]
 
-renderGameOver : [Form]
-renderGameOver =
+renderGameOver : Model.Done -> [Form]
+renderGameOver done =
   let
-    gameOverMessage : Form
-    gameOverMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 4)
+    endGameMessages : [Form]
+    endGameMessages = case done of
+      Model.Win -> renderWin
+      Model.AtFault -> renderAtFault
+      Model.Fail -> renderFail
+      Model.GoodJob -> renderGoodJob
 
     replayMessage : Form
     replayMessage = styleText (rgb 220 220 200) 16 "Press [ENTER] to relive that day" |> moveY (-halfHeight / 2)
 
-  in [gameOverMessage, replayMessage]
+  in endGameMessages ++ [replayMessage]
+
+renderWin : [Form]
+renderWin =
+  let winMessage : Form
+      winMessage = styleText (rgb 160 0 0) 40 "You win!" |> moveY(halfHeight / 2)
+
+      consequence : Form
+      consequence = styleText (rgb 160 0 0) 30 "Someday, the world will know your name" |> moveY(halfHeight / 4)
+
+  in [winMessage, consequence]
+
+renderAtFault : [Form]
+renderAtFault =
+  let atFaultMessage : Form
+      atFaultMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 2)
+
+      consequence : Form
+      consequence = styleText (rgb 160 0 0) 30 "Good job starting a nuclear war" |> moveY(halfHeight / 4)
+
+  in [atFaultMessage, consequence]
+
+renderFail : [Form]
+renderFail =
+  let failMessage : Form
+      failMessage = styleText (rgb 160 0 0) 40 "That could have gone better" |> moveY(halfHeight / 2)
+
+      consequence : Form
+      consequence = styleText (rgb 160 0 0) 30 "War is on, but at least it isn't your fault" |> moveY(halfHeight / 4)
+
+  in [failMessage, consequence]
+
+renderGoodJob : [Form]
+renderGoodJob =
+  let goodJobMessage : Form
+      goodJobMessage = styleText (rgb 160 0 0) 40 "Game Over" |> moveY(halfHeight / 2)
+
+      consequence : Form
+      consequence = styleText (rgb 160 0 0) 30 "You did your job and launched the counterstrike" |> moveY(halfHeight / 4)
+
+  in [goodJobMessage, consequence]

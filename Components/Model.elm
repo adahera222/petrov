@@ -3,7 +3,7 @@ module Components.Model where
 import Components.Input as Input
 
 data State = StartScreen | IntroScreen | Alive | Done
-data Done = NotYet | Win | Lose | Tie
+data Done = NotYet | Win | AtFault | Fail | GoodJob
 
 type Game =
   { state: State
@@ -57,7 +57,8 @@ stepTimer start now =
 calculateDoneCondition : Bool -> Bool -> Done
 calculateDoneCondition realLaunch didLaunch =
   if | not realLaunch && not didLaunch -> Win
-     | realLaunch && didLaunch -> Tie
-     | (not realLaunch && didLaunch) || (realLaunch && not didLaunch) -> Lose
+     | not realLaunch && didLaunch -> AtFault
+     | realLaunch && not didLaunch -> Fail
+     | realLaunch && didLaunch -> GoodJob
 
 gameState = foldp stepGame defaultGame Input.input
